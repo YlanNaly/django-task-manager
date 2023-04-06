@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
-from pathlib import Path
 
+import environ
+from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,15 +74,16 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+env = environ.Env()
+environ.Env.read_env()
 # CHANGE THIS SECTION TO MAKE YOUR DATABASE WORK
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task_manager',
+        'NAME': env("DB_NAME"),
         'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'PASSWORD': env("DB_PASS"),
+        'HOST': env("DB_HOST"),
         'PORT': '5432',
     }
 }
